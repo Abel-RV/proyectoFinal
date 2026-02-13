@@ -19,4 +19,16 @@ public class ModeloCandidatos {
         };
         candidatos= Arrays.asList(arrayCandidatos);
     }
+
+    public Candidatos getById(int id){
+        return candidatos.stream()
+                .filter(candidato -> candidato.getId() == id)
+                .findFirst().orElse(null);
+    }
+
+    public List<Candidatos> getCandidatos(){
+        return candidatos;
+    }
+
+
 }
