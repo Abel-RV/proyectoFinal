@@ -58,13 +58,11 @@ public class Main {
                 if (comando.equals("END")) {
                     salir = true;
                 } else if (comando.equals("VOTAR")) {
-                    // El caso VOTAR tiene un diálogo extra
-                    System.out.println(dis.readUTF()); // Servidor: "Introduce el nombre..."
+                    System.out.println(dis.readUTF());
                     String voto = sc.nextLine();
-                    dos.writeUTF(voto);                // Enviamos el nombre
-                    System.out.println("SERVIDOR: " + dis.readUTF()); // Confirmación
+                    dos.writeUTF(voto);
+                    System.out.println("SERVIDOR: " + dis.readUTF());
                 } else {
-                    // LISTAR y RESULTADOS devuelven una lista directa (con corchetes, como querías)
                     System.out.println("RESPUESTA SERVIDOR:");
                     System.out.println(dis.readUTF());
                 }
