@@ -2,6 +2,7 @@ package es.abelramirez;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ModeloCandidatos {
 
@@ -29,6 +30,29 @@ public class ModeloCandidatos {
     public List<Candidatos> getCandidatos(){
         return candidatos;
     }
+
+    public synchronized boolean votar(String nombre){
+        for(Candidatos c:candidatos){
+            if(c.getNombre().equalsIgnoreCase(nombre)){
+                c.setNumVotos(c.getNumVotos() + 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<String> obtenerResultados(){
+        return candidatos.stream()
+                .map(c->c.getNombre()+": "+c.getNumVotos())
+                .collect(Collectors.toList());
+    }
+
+    public List<String> obtenerListasNombre(){
+        return candidatos.stream().
+                map(c->c.getId()+". "+c.getNombre())
+                .collect(Collectors.toList());
+    }
+
 
 
 }
