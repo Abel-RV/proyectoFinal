@@ -9,22 +9,26 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 public class HiloVotacion extends Thread{
     private Socket socket;
     private ModeloCandidatos mc;
     private VentanaServidor vs;
+    private Semaphore semaphore;
 
-    public HiloVotacion(Socket socket,ModeloCandidatos mc,VentanaServidor vs) {
+    public HiloVotacion(Socket socket,ModeloCandidatos mc,VentanaServidor vs,Semaphore semaphore) {
         this.socket = socket;
         this.mc = mc;
         this.vs = vs;
+        this.semaphore = semaphore;
     }
 
     @Override
     public void run() {
         try(DataInputStream dis = new DataInputStream(socket.getInputStream());
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());) {
+            semaphore.acquire();
 
             while (true) {
                 String comando = dis.readUTF();
@@ -59,7 +63,12 @@ public class HiloVotacion extends Thread{
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }finally {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(semaphore!=null){
+                semaphore.release();
+            }
             try {
                 socket.close();
             } catch (IOException e) {

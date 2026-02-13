@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,8 @@ public class VentanaServidor extends javax.swing.JFrame {
     private SSLServerSocket serverSocket;
     private ExecutorService pool;
     private ModeloCandidatos modeloCandidatos;
+    private Semaphore semaphore;
+
 
 
     public VentanaServidor() {
@@ -147,7 +150,8 @@ public class VentanaServidor extends javax.swing.JFrame {
 
             pool = Executors.newFixedThreadPool(numClientes);
 
-            HiloServidor servidor = new HiloServidor(serverSocket, pool, modeloCandidatos, this);
+            semaphore = new Semaphore(numClientes);
+            HiloServidor servidor = new HiloServidor(serverSocket, pool, modeloCandidatos, this,semaphore);
             servidor.start();
 
             System.out.println("Servidor SSL INICIADO en puerto " + puerto);
