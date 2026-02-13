@@ -12,11 +12,11 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        System.setProperty("javax.net.ssl.trustStore", "client_truststore.jks");
+        System.setProperty("javax.net.ssl.trustStore", "ssl/client_truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
 
         String host = "localhost";
-        int puerto= 1000;
+        int puerto= 5555;
 
         try{
             SSLSocketFactory sf =(SSLSocketFactory) SSLSocketFactory.getDefault();

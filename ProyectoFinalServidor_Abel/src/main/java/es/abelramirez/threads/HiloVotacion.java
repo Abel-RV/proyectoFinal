@@ -1,6 +1,7 @@
 package es.abelramirez.threads;
 
 import es.abelramirez.ModeloCandidatos;
+import es.abelramirez.gui.VentanaServidor;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,10 +13,12 @@ import java.util.List;
 public class HiloVotacion extends Thread{
     private Socket socket;
     private ModeloCandidatos mc;
+    private VentanaServidor vs;
 
-    public HiloVotacion(Socket socket,ModeloCandidatos mc) {
+    public HiloVotacion(Socket socket,ModeloCandidatos mc,VentanaServidor vs) {
         this.socket = socket;
         this.mc = mc;
+        this.vs = vs;
     }
 
     @Override

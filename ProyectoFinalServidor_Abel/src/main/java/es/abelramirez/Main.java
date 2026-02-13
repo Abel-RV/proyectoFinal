@@ -1,5 +1,6 @@
 package es.abelramirez;
 
+import es.abelramirez.gui.VentanaServidor;
 import es.abelramirez.threads.HiloServidor;
 
 import javax.net.ssl.SSLServerSocket;
@@ -11,20 +12,24 @@ import java.util.concurrent.Executors;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        System.setProperty("javax.net.ssl.keyStore", "ssl/server_keystore.jks");
-        System.setProperty("javax.net.ssl.keyStorePassword", "123456");
-
-        ModeloCandidatos mc = new ModeloCandidatos();
-        ExecutorService pool = Executors.newFixedThreadPool(5);
-        int puerto =1000;
-        try{
-            SSLServerSocketFactory ssf = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-            SSLServerSocket serverSocket = (SSLServerSocket) ssf.createServerSocket();
-            HiloServidor hiloServidor = new HiloServidor(serverSocket,pool,mc);
-            hiloServidor.start();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public static void main(String args[]) {
+        /* Estilo visual Nimbus (Opcional, queda más bonito) */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(VentanaServidor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+        /* Crear y mostrar */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new VentanaServidor().setVisible(true);
+            }
+        });
     }
 }
