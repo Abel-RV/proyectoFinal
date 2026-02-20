@@ -29,7 +29,6 @@ public class Main {
 
             boolean salir = false;
             while (!salir) {
-                // Menú de opciones
                 System.out.println("\n--- SISTEMA DE VOTACIÓN ---");
                 System.out.println("1. Listar Candidatos");
                 System.out.println("2. Votar");
